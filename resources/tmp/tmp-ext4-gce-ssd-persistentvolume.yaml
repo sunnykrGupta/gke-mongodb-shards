@@ -1,0 +1,14 @@
+apiVersion: "v1"
+kind: "PersistentVolume"
+metadata:
+  name: data-volume-k8s-mongodb-daemonsl-5g-1
+spec:
+  capacity:
+      storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  persistentVolumeReclaimPolicy: Retain
+  storageClassName: fast
+  gcePersistentDisk:
+    fsType: ext4
+    pdName: pd-ssd-disk-k8s-mongodb-daemonsl-5g-1

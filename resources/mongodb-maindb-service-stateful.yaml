@@ -1,0 +1,78 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: mongodb-shardX-headless-service
+  namespace: NAMESPACE_ID
+  labels:
+    name: mongodb-shardX
+spec:
+  ports:
+  - port: 27017
+    targetPort: 27017
+  clusterIP: None
+  selector:
+    role: mongodb-shardX
+---
+apiVersion: apps/v1beta2
+kind: StatefulSet
+metadata:
+  name: mongodb-shardX
+  namespace: NAMESPACE_ID
+spec:
+  selector:
+    matchLabels:
+      role: mongodb-shardX # has to match .spec.template.metadata.labels
+  serviceName: mongodb-shardX-headless-service
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        role: mongodb-shardX
+        tier: maindb
+        replicaset: ShardX
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: replicaset
+                  operator: In
+                  values:
+                  - ShardX
+              topologyKey: kubernetes.io/hostname
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mongodb-shardX-container
+          image: mongo
+          command:
+            - "mongod"
+            - "--port"
+            - "27017"
+            - "--bind_ip"
+            - "0.0.0.0"
+            - "--replSet"
+            - "ShardX"
+            - "--dbpath"
+            - "/mongo-disk"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-shardX-persistent-storage-claim
+              mountPath: /mongo-disk
+  volumeClaimTemplates:
+  - metadata:
+      name: mongo-shardX-persistent-storage-claim
+      annotations:
+        volume.beta.kubernetes.io/storage-class: "fast"
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: DB_DISK

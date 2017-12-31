@@ -1,0 +1,43 @@
+apiVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: mongos
+  namespace: NAMESPACE_ID
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        role: mongos
+        tier: routers
+    spec:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: tier
+                  operator: In
+                  values:
+                  - routers
+              topologyKey: kubernetes.io/hostname
+      terminationGracePeriodSeconds: 10
+      containers:
+        - name: mongos-container
+          image: mongo
+          command:
+            - "mongos"
+            - "--port"
+            - "27017"
+            - "--bind_ip"
+            - "0.0.0.0"
+            - "--configdb"
+            - "mongodb-configdb-0.mongodb-configdb-headless-service.default.svc.cluster.local:27019"
+          resources:
+            requests:
+              cpu: 50m
+              memory: 100Mi
+          ports:
+            - containerPort: 27017
