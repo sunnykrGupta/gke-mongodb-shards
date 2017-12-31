@@ -24,10 +24,11 @@ Ensure the following dependencies are already fulfilled on your host Linux syste
 GCP’s client command line tool [gcloud](https://cloud.google.com/sdk/docs/quickstarts) has been installed on your local workstation.
 
 Your local workstation has been initialised to:
-    (1) gcloud authentication to a project to manage container engine.
-    (2) install the Kubernetes command tool (“kubectl”),
-    (3) configure authentication credentials,
-    (4) Docker needs to be installed to build an image "Step 7 - shard manager".
+    
+1. gcloud authentication to a project to manage container engine.
+2. Install the Kubernetes command tool (“kubectl”),
+3. Configure authentication credentials,
+4. Docker needs to be installed to build an image 
 
 
 ### 1.2 Deployment
@@ -60,17 +61,12 @@ Using a command-line terminal/shell, execute the following
 
 ### Scripts Working
 
-- 1.pd-ssd-create-disks-persistent-vol-creation.sh  #script to create disk to be used by mongodb-replica server and mongo-config database and to create PersistentVolume to reserve disk in retain policy.
-
-- 2.mongo-config-deploy.sh  #deploy a stateful container, headless-service and register a persistent-volumes-claim to claim disk declared by persistent-volumes.
-
-- 3.mongo-shard-deploy.sh   #deploy a two shard each in stateful container, headless-service and register a persistent-volumes-claim to claim disk declared by persistent-volumes.
-
-- 4.mongos-deploy.sh    #deploy mongos as deployment and headless-service to allow all pods for inter-communication.
-
-- 5.check-pod-status.sh     #to check all pods are up and alive.
-
-- 6.shard-connectivity.sh   #to configure mongodb-maindb servers to initiate replicasets and configure mongos to enable sharding.
+1.pd-ssd-create-disks-persistent-vol-creation.sh  #script to create disk to be used by mongodb-replica server and mongo-config database and to create PersistentVolume to reserve disk in retain policy.
+2.mongo-config-deploy.sh  #deploy a stateful container, headless-service and register a persistent-volumes-claim to claim disk declared by persistent-volumes.
+3.mongo-shard-deploy.sh   #deploy a two shard each in stateful container, headless-service and register a persistent-volumes-claim to claim disk declared by persistent-volumes.
+4.mongos-deploy.sh    #deploy mongos as deployment and headless-service to allow all pods for inter-communication.
+5.check-pod-status.sh     #to check all pods are up and alive.
+6.shard-connectivity.sh   #to configure mongodb-maindb servers to initiate replicasets and configure mongos to enable sharding.
 
 This takes a few minutes to complete. Once completed, you should have a MongoDB Sharded Cluster initialised and running in some Kubernetes StatefulSets/Deployments. The executed bash script will have created the following resources:
 
