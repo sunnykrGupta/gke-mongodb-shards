@@ -1,5 +1,4 @@
-# MongoDB Sharded Cluster Deployment Demo for Kubernetes on GKE
-
+# Sharded Mongodb in Kubernetes StatefulSets on GKE
 
 An example project demonstrating the deployment of a MongoDB Sharded Cluster via Kubernetes on the Google Kubernetes Engine (GKE), using Kubernetes' feature StatefulSet. Contains example Kubernetes YAML resource files (in the 'resources' folder) and associated Kubernetes based Bash scripts (in the 'scripts' folder) to configure the environment and deploy a MongoDB Replica Set.
 
@@ -106,3 +105,5 @@ It is also worth checking in the [Google Cloud Platform Console](https://console
 * Use of Kubernetes StatefulSets and PersistentVolumeClaims to ensure data is not lost when containers are recycled
 * Proper configuration of a MongoDB Sharded Cluster for Scalability with each Shard being a Replica Set for full resiliency
 * Controlling Anti-Affinity for Mongod Replicas to avoid a Single Point of Failure
+
+**Credit :** This repo is based on workdone by [Paul Done](https://twitter.com/TheDonester)
