@@ -26,11 +26,13 @@ echo "mongodb-configdb-0"
 until kubectl --v=0 exec --namespace=${namespace} mongodb-configdb-0 -c mongodb-configdb-container -- mongo --port 27019 --quiet --eval 'db.getMongo()'; do
     echo -n "  "
 done
+
 echo -n "  "
 echo "mongodb-shard1-0"
 until kubectl --v=0 exec --namespace=${namespace} mongodb-shard1-0 -c mongodb-shard1-container -- mongo --port 27017 --quiet --eval 'db.getMongo()'; do
     echo -n "  "
 done
+
 echo -n "  "
 echo "mongodb-shard2-0"
 until kubectl --v=0 exec --namespace=${namespace} mongodb-shard2-0 -c mongodb-shard2-container -- mongo --port 27017 --quiet --eval 'db.getMongo()'; do
