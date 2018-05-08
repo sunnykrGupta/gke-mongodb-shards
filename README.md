@@ -1,5 +1,6 @@
 # Sharded Mongodb in Kubernetes StatefulSets on GKE
 
+
 An example project demonstrating the deployment of a MongoDB Sharded Cluster via Kubernetes on the Google Kubernetes Engine (GKE), using Kubernetes' feature StatefulSet. Contains example Kubernetes YAML resource files (in the 'resources' folder) and associated Kubernetes based Bash scripts (in the 'scripts' folder) to configure the environment and deploy a MongoDB Replica Set.
 
 For further background information on what these scripts and resource files do, plus general information about running MongoDB with Kubernetes.
@@ -13,6 +14,12 @@ For further background information on what these scripts and resource files do, 
 - http://blog.kubernetes.io/2017/03/dynamic-provisioning-and-storage-classes-kubernetes.html
 - http://blog.kubernetes.io/2017/03/advanced-scheduling-in-kubernetes.html
 
+--------------------------
+
+> Note : This setup is compatible with <= mongo 3.2. For version >= 3.4 , configdb needs to be a replicaSet, so make changes to yaml files to make it work for you.
+https://docs.mongodb.com/v3.4/tutorial/upgrade-config-servers-to-replica-set/
+
+--------------------------
 
 ## 1 How To Run
 
