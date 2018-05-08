@@ -108,8 +108,9 @@ It is also worth checking in the [Google Cloud Platform Console](https://console
 * Controlling Anti-Affinity for Mongod Replicas to avoid a Single Point of Failure
 
 
+---------------------------
 
-#### Errors
+#### Errors Encountered
 
 ```
 BadValue: configdb supports only replica set connection string
