@@ -20,7 +20,6 @@ configDB_SSD_DISK_inGB="5"
 
 # Delete mongos deployment + mongod stateful set + mongodb service + secrets + host vm configurer daemonset
 kubectl delete deployments mongos --namespace=${namespace}
-kubectl delete services mongos-headless-service --namespace=${namespace}
 
 kubectl delete statefulsets mongodb-shard1 --namespace=${namespace}
 kubectl delete services mongodb-shard1-headless-service --namespace=${namespace}
@@ -35,6 +34,8 @@ sleep 3
 # Delete persistent volume claims
 kubectl delete persistentvolumeclaims -l role=mongodb-shard1  --namespace=${namespace}
 kubectl delete persistentvolumeclaims -l role=mongodb-shard2 --namespace=${namespace}
+kubectl delete persistentvolumeclaims -l role=mongodb-configdb --namespace=${namespace}
+
 sleep 3
 
 # Delete persistent volumes
