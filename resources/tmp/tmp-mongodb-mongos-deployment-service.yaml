@@ -1,18 +1,3 @@
-apiVersion: v1
-kind: Service
-metadata:
-  name: mongos-headless-service
-  namespace: daemonsl
-  labels:
-    name: mongos
-spec:
-  ports:
-  - port: 10007
-    targetPort: 10007
-  clusterIP: None
-  selector:
-    role: mongos
----
 apiVersion: apps/v1beta1
 kind: Deployment
 metadata:
@@ -41,18 +26,18 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mongos-container
-          image: mongo:2.6
+          image: mongo:3.2
           command:
             - "mongos"
             - "--port"
-            - "10007"
+            - "27017"
             - "--bind_ip"
             - "0.0.0.0"
             - "--configdb"
-            - "mongodb-configdb-0.mongodb-configdb-headless-service.daemonsl.svc.cluster.local:10009"
+            - "mongodb-configdb-0.mongodb-configdb-headless-service.daemonsl.svc.cluster.local:27019"
           resources:
             requests:
               cpu: 50m
               memory: 100Mi
           ports:
-            - containerPort: 10007
+            - containerPort: 27017

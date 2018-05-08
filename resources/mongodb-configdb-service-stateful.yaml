@@ -45,7 +45,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mongodb-configdb-container
-          image: mongo
+          image: mongo:3.2
           command:
             - "mongod"
             - "--port"

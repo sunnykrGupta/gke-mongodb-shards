@@ -23,11 +23,11 @@ Ensure the following dependencies are already fulfilled on your host Linux syste
 GCP’s client command line tool [gcloud](https://cloud.google.com/sdk/docs/quickstarts) has been installed on your local workstation.
 
 Your local workstation has been initialised to:
-    
+
 1. gcloud authentication to a project to manage container engine.
 2. Install the Kubernetes command tool (“kubectl”),
 3. Configure authentication credentials,
-4. Docker needs to be installed to build an image 
+4. Docker needs to be installed to build an image
 
 
 ### 1.2 Deployment
@@ -105,5 +105,20 @@ It is also worth checking in the [Google Cloud Platform Console](https://console
 * Use of Kubernetes StatefulSets and PersistentVolumeClaims to ensure data is not lost when containers are recycled
 * Proper configuration of a MongoDB Sharded Cluster for Scalability with each Shard being a Replica Set for full resiliency
 * Controlling Anti-Affinity for Mongod Replicas to avoid a Single Point of Failure
+
+---------------------------
+
+#### Errors Encountered
+
+```
+BadValue: configdb supports only replica set connection string
+```
+If mongodb version 3.4 >= used, this error will be thrown by mongos. To fix this, we need to make config server as replicaSet, which was not necessary before this version.
+
+https://docs.mongodb.com/v3.4/tutorial/upgrade-config-servers-to-replica-set/
+
+To support version > 3.2, updates are most welcome here.
+
+---------------------------
 
 **Credit :** This repo is based on workdone by [Paul Done](https://twitter.com/TheDonester)

@@ -7,8 +7,8 @@ metadata:
     name: mongodb-configdb
 spec:
   ports:
-  - port: 10009
-    targetPort: 10009
+  - port: 27019
+    targetPort: 27019
   clusterIP: None
   selector:
     role: mongodb-configdb
@@ -45,11 +45,11 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: mongodb-configdb-container
-          image: mongo:2.6
+          image: mongo:3.2
           command:
             - "mongod"
             - "--port"
-            - "10009"
+            - "27019"
             - "--dbpath"
             - "/mongo-disk"
             - "--bind_ip"
@@ -60,7 +60,7 @@ spec:
               cpu: 50m
               memory: 100Mi
           ports:
-            - containerPort: 10009
+            - containerPort: 27019
           volumeMounts:
             - name: mongodb-configdb-persistent-storage-claim
               mountPath: /mongo-disk

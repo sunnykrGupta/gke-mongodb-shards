@@ -7,8 +7,8 @@ metadata:
     name: mongodb-shard2
 spec:
   ports:
-  - port: 10007
-    targetPort: 10007
+  - port: 27017
+    targetPort: 27017
   clusterIP: None
   selector:
     role: mongodb-shard2
@@ -29,7 +29,7 @@ spec:
       labels:
         role: mongodb-shard2
         tier: maindb
-        replicaset: ssShard2
+        replicaset: Shard2
     spec:
       affinity:
         podAntiAffinity:
@@ -41,20 +41,20 @@ spec:
                 - key: replicaset
                   operator: In
                   values:
-                  - ssShard2
+                  - Shard2
               topologyKey: kubernetes.io/hostname
       terminationGracePeriodSeconds: 10
       containers:
         - name: mongodb-shard2-container
-          image: mongo:2.6
+          image: mongo:3.2
           command:
             - "mongod"
             - "--port"
-            - "10007"
+            - "27017"
             - "--bind_ip"
             - "0.0.0.0"
             - "--replSet"
-            - "ssShard2"
+            - "Shard2"
             - "--dbpath"
             - "/mongo-disk"
           resources:
@@ -62,7 +62,7 @@ spec:
               cpu: 50m
               memory: 100Mi
           ports:
-            - containerPort: 10007
+            - containerPort: 27017
           volumeMounts:
             - name: mongo-shard2-persistent-storage-claim
               mountPath: /mongo-disk
